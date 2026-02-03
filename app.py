@@ -3,7 +3,7 @@ from github import Github, Auth
 
 def check_github_connection():
     try:
-        auth = Auth.Token(st.secrets["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"])
+        auth = Auth.Token(st.secrets["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"])
         g = Github(auth=auth)
         repo = g.get_repo("pwngithub/pwnhomes")
         return f"Connected to: {repo.full_name}"
