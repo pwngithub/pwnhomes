@@ -1,9 +1,15 @@
-from github import Github
-from github import Auth
+import streamlit as st
+from github import Github, Auth
 
-# Authenticate using the fine-grained token from secrets
-auth = Auth.Token(st.secrets["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"])
-g = Github(auth=auth)
+def check_github_connection():
+    try:
+        auth = Auth.Token(st.secrets["GITHUB_TOKEN"])
+        g = Github(auth=auth)
+        repo = g.get_repo("pwngithub/pwnhomes")
+        return f"Connected to: {repo.full_name}"
+    except Exception as e:
+        return f"Connection Failed: {e}"
 
-# The rest of your upload logic remains the same
-repo = g.get_repo("pwngithub/pwnhomes")
+if st.sidebar.button("Test GitHub Connection"):
+    status = check_github_connection()
+    st.sidebar.write(status)
